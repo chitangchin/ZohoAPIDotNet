@@ -2,7 +2,7 @@
 
 namespace ZohoAPI
 {
-    public class AccessToken(string _clientId, string _clientSecret, string _code)
+    public class AccessToken(string _clientId, string _clientSecret, string _orgId)
     {
         //Latest token URL
         private const string TokenUrl = "https://accounts.zoho.com/oauth/v2/token";
@@ -17,8 +17,9 @@ namespace ZohoAPI
                 {
                     { "client_id", _clientId },
                     { "client_secret", _clientSecret },
-                    { "code", _code },
-                    { "grant_type", "authorization_code" }
+                    { "grant_type", "client_credentials" },
+                    { "scope", "ZohoCRM.settings.READ" },
+                    { "soid", $"ZohoCRM.{_orgId}" },
                 };
 
                 var content = new FormUrlEncodedContent(FormData);
