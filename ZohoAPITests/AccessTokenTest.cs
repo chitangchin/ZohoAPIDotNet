@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
 using ZohoAPI;
 
 namespace ZohoAPITests
@@ -8,30 +9,31 @@ namespace ZohoAPITests
     [TestFixture]
     public class AccessTokenIntegrationTests
     {
-        [Test]
-        public Task GetWithValidCredentials()
+        public string? ClientId { get; private set; }
+        public string? ClientSecret { get; private set; }
+        public string? OrgId { get; private set; }
+
+        [SetUp]
+        public void Setup()
         {
             var config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
                 .Build();
 
-            string? clientId = config["clientId"];
-            string? clientSecret = config["clientSecret"];
-            string? orgId = config["ordId"];
+            ClientId = config["clientId"];
+            ClientSecret = config["clientSecret"];
+            OrgId = config["orgId"];
+        }
 
-            if (orgId == null || clientSecret == null || clientId == null)
+        [Test]
+        public Task GetWithValidCredentials()
+        {
+            if (ClientId == null || ClientSecret == null || OrgId == null)
             {
-                Console.WriteLine("Please configure your client ID, client secrete, or org ID");
                 Environment.Exit(0);
             }
 
-            //Tested and passed with a one time use code
-            //string clientId = "1000.8Q4BC725A1DE7JLYT6ZNWTTF6701BY";
-            //string clientSecret = "b888aed555351bd90ddda0efd7b4f657e89eeddcda";
-            //string orgId = "41749829";
-
-            var accessToken = new AccessToken(clientId, clientSecret, orgId);
-
+            var accessToken = new AccessToken(ClientId, ClientSecret, OrgId);
             Assert.DoesNotThrowAsync(async () => await accessToken.Get());
             return Task.CompletedTask;
         }

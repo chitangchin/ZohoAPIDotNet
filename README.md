@@ -11,3 +11,28 @@
     - Zoho CRM
     - Zoho Books
     - Zoho Subscriptions
+
+### Running Tests
+
+## **2. Install Dependencies**  
+```bash
+dotnet restore
+```
+
+## **3. Securely Store API Keys**  
+Use `.NET user-secrets` to store **Client ID, Client Secret, and Org ID**.  
+
+You can generate your Client ID and Client Secret:
+https://api-console.zoho.com/client
+
+```bash
+dotnet user-secrets init
+dotnet user-secrets set "clientId" "1000.xxxxxxxxxxxxxxxxxxxxx"
+dotnet user-secrets set "bxxxxxxxxxxxxxxxxxxxxxxxxxxxxa"
+dotnet user-secrets set "orgId" "xxxxxxxx"
+```
+
+
+
+
+
