@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.Extensions.Configuration;
-using NUnit.Framework;
 using ZohoAPI;
 
 namespace ZohoAPITests
