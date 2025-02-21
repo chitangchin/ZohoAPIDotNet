@@ -30,12 +30,13 @@ jobs:
       run: dotnet build
 
     - name: Setting up secrets
-      run: cd ZohoAPITests
-           dotnet user-secrets init
-           dotnet user-secrets set "clientId" ${{ secrets.CLIENTID }}
-           dotnet user-secrets set "clientSecret" ${{ secrets.CLIENTSECRET }}
-           dotnet user-secrets set "orgId" ${{ secrets.ORGID }}
-           cd..
+      run: |
+        cd ZohoAPITests
+        dotnet user-secrets init
+        dotnet user-secrets set "clientId" ${{ secrets.CLIENTID }}
+        dotnet user-secrets set "clientSecret" ${{ secrets.CLIENTSECRET }}
+        dotnet user-secrets set "orgId" ${{ secrets.ORGID }}
+        cd ..
 
     - name: Run Test Validation
       run: dotnet test
