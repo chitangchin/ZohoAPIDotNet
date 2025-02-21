@@ -28,7 +28,7 @@ https://api-console.zoho.com/client
 ```bash
 dotnet user-secrets init
 dotnet user-secrets set "clientId" "1000.xxxxxxxxxxxxxxxxxxxxx"
-dotnet user-secrets set "bxxxxxxxxxxxxxxxxxxxxxxxxxxxxa"
+dotnet user-secrets set "clientSecret" "bxxxxxxxxxxxxxxxxxxxxxxxxxxxxa"
 dotnet user-secrets set "orgId" "xxxxxxxx"
 ```
 

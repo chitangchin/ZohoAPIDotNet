@@ -1,0 +1,42 @@
+name: Build and Test Validation
+
+on: 
+  push:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: build_and_test_validation_${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOs-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Display dotnet version
+      run: dotnet --version
+
+    - name: Install Dependencies
+      run: dotnet restore
+
+    - name: Run Build Validation
+      run: dotnet build
+
+    - name: Setting up secrets
+      run: |
+        cd ZohoAPITests
+        dotnet user-secrets init
+        dotnet user-secrets set "clientId" ${{ secrets.CLIENTID }}
+        dotnet user-secrets set "clientSecret" ${{ secrets.CLIENTSECRET }}
+        dotnet user-secrets set "orgId" ${{ secrets.ORGID }}
+        cd ..
+
+    - name: Run Test Validation
+      run: dotnet test
