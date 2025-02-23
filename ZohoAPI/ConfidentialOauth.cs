@@ -2,7 +2,7 @@
 
 namespace ZohoAPI
 {
-    public class AccessToken(string _clientId, string _clientSecret, string _orgId)
+    public class ConfidentialOauth(string _clientId, string _clientSecret, string _orgId)
     {
         //Latest token URL
         private const string TokenUrl = "https://accounts.zoho.com/oauth/v2/token";
