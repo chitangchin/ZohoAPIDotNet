@@ -1,21 +1,20 @@
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Microsoft.Extensions.Configuration;
 using ZohoAPI;
 
-namespace ZohoAPITests
+namespace ZohoAPITests.UnitTests
 {
     [TestFixture]
-    public class AccessTokenIntegrationTests
+    public class AccessTokenUnitTests
     {
-        private IConfigurationRoot config;
+        private readonly IConfigurationRoot config;
         public string? ClientId { get; set; }
         public string? ClientSecret { get; set; }
         public string? OrgId { get; set; }
 
-        public AccessTokenIntegrationTests()
+        public AccessTokenUnitTests()
         {
             config = new ConfigurationBuilder()
-               .AddUserSecrets<AccessTokenIntegrationTests>()
+               .AddUserSecrets<AccessTokenUnitTests>()
                .Build();
 
             ClientId = config["clientId"];
@@ -26,7 +25,7 @@ namespace ZohoAPITests
         [Test]
         public void GetWithValidCredentials()
         {
-            var accessToken = new AccessToken(ClientId!, ClientSecret!, OrgId!);
+            var accessToken = new ConfidentialOauth(ClientId!, ClientSecret!, OrgId!);
             Assert.DoesNotThrowAsync(async () => await accessToken.Get());
         }
 
@@ -38,7 +37,7 @@ namespace ZohoAPITests
             string invalidSecret = "invalid";
             string invalidOrgId = "invalid";
 
-            var accessToken = new AccessToken(invalidId, invalidSecret, invalidOrgId);
+            var accessToken = new ConfidentialOauth(invalidId, invalidSecret, invalidOrgId);
 
             Assert.ThrowsAsync<Exception>(async () => await accessToken.Get());
         }
