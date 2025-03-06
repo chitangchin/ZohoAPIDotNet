@@ -1,8 +1,6 @@
 # Zoho API for .NET
 
-## A NuGET Package for Zoho's OAuth-protected APIs.
-
-- Simplified API interaction with Zoho services (e.g., Zoho CRM).
+A NuGET Package for Zoho's OAuth-protected APIs.
 
 ### Running Tests
 
