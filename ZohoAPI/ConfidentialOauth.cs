@@ -9,7 +9,7 @@ namespace ZohoAPI
         private static readonly HttpClient client = new();
 
         //Getting access token from zoho
-        public async Task<string> Get()
+        public async Task<HttpResponseMessage> Get()
         {
             try
             {
@@ -23,8 +23,7 @@ namespace ZohoAPI
                 };
 
                 var content = new FormUrlEncodedContent(FormData);
-                using var response = await client.PostAsync(TokenUrl, content);
-                var responseBody = await response.Content.ReadAsStringAsync();
+                var response = await client.PostAsync(TokenUrl, content);
 
                 /* Zoho outputs status code 200 if all fields are populated but invalid
                     JSON response:
@@ -32,14 +31,8 @@ namespace ZohoAPI
                         "error": "invalid_code"
                     }  
                 */
-                using var jsonDoc = JsonDocument.Parse(responseBody);
-                if (jsonDoc.RootElement.TryGetProperty("error", out var errorElement))
-                {
-                    string? errorMessage = errorElement!.GetString();
-                    throw new Exception($"API error: {errorMessage}");
-                }
-
-                return responseBody;
+                Console.WriteLine(response);
+                return response;
             }
             catch (HttpRequestException error)
             {
